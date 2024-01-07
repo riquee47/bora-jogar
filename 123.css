@@ -1,0 +1,8 @@
+.rowmundo{
+    a:hover {
+        background: linear-gradient(to right, #ff0000, #ffff00); /* Example gradient: red to yellow */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+}

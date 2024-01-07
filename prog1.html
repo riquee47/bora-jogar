@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="css/123.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>bora jogar</title>
+    <style>
+        /* Seu estilo CSS aqui */
+        @font-face {
+            font-family: 'Gotham';
+            src: url('Gotham-Bold.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'Gotham';
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            transition: background-color 0.5s ease-in-out; /* Add transition for background color */
+            position: relative; /* Adicionado para posicionamento absoluto em relação a este elemento */
+            
+        }
+        #textContainer {
+            position: absolute; /* Position absolutely */
+            top: 10px; /* Position from the top */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for centering */
+            font-size: 36px; /* Enlarge text */
+            text-align: center; /* Center text within container */
+            transition: opacity 0.5s ease-in-out, top 0.5s ease-in-out; /* Adicionado para fade-out e movimentação vertical */
+        }
+        h1 {
+            margin: 0;
+            opacity: 1; /* Inicialmente opacidade 1 */
+            transition: opacity 0.5s ease-in-out; /* Adicionado para fade-out */
+        }
+        #additionalContent {
+            margin-top: 50px; /* Adicionado espaço entre as frases */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #additionalContent h2 {
+            margin: 0; /* Zerar margem para evitar espaçamento adicional */
+            color: white; /* Cor do texto no novo conteúdo */
+            transition: none; /* Remova a transição de cor para o h2 */
+            margin-bottom: 20px; /* Adicionado espaço abaixo da palavra 'PARABÉNS' */
+        }
+        p {
+            margin: 0;
+            transition: opacity 0.5s ease-in-out; /* Transition for opacity */
+            visibility: hidden; /* Inicialmente oculto */
+            opacity: 0; /* Inicialmente com opacidade 0 */
+            position: absolute; /* Posicionamento absoluto */
+            bottom: 50px; /* Distância do fundo da página (alterado para 50px) */
+            left: 50%; /* Centralizar horizontalmente */
+            transform: translateX(-50%); /* Ajuste para centralizar */
+            top: 30px; /* Adicionado para movimentação vertical */
+        }
+        body.active {
+            background-color: #212121;
+            color: white; /* Text color when background is black */
+        }
+        #toggleButton {
+            position: relative;
+            width: 126.4px; /* Aumentado para 200% do tamanho original */
+            height: 66.4px; /* Aumentado para 200% do tamanho original */
+            cursor: pointer;
+            background-color: transparent;
+            border: 4px solid black; /* Aumentado para 200% do tamanho original */
+            border-radius: 40px; /* Aumentado para 200% do tamanho original */
+            overflow: hidden;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        #circleContainer {
+            position: absolute;
+            top: 50%;
+            left: calc(50% - 30px); /* Ajustado para 200% do tamanho original */
+            transform: translate(-50%, -50%);
+            width: 50px; /* Ajustado para 200% do tamanho original */
+            height: 50px; /* Ajustado para 200% do tamanho original */
+            background-color: #00ff00;
+            border-radius: 50%;
+            transition: left 0.3s ease-in-out;
+        }
+        #toggleButton.active #circleContainer {
+            left: calc(100% - 30px); /* Ajustado para 200% do tamanho original */
+        }
+        body.active {
+            background-color: #212121; /* Matte black color */
+        }
+        audio {
+            display: none;
+        }
+        #copyButton {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #copyButton.active {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class='row rowmundo'>
+
+        </div>
+    </header>
+    <div id="textContainer">
+        <h1 id="mainText">BORA JOGAR</h1>
+        <div id="additionalContent">
+            <h2>PARABÉNS</h2>
+            <p id="hiddenText" style="top: 20px;">o id do servidor no minecraft é CapiaoDoFoco.aternos.me:57624</p>
+        </div>
+    </div>
+    <div id="toggleButton" onclick="toggleButton()">
+        <div id="circleContainer"></div>
+    </div>
+    <audio id="bgMusic" src="360ytmp3.com_320kbps-ethereal.mp3" loop></audio>
+    <button id="copyButton" onclick="copyServerID()">Copiar ID do Servidor</button>
+    <script>
+        var bgMusic = document.getElementById("bgMusic");
+        var copyButton = document.getElementById("copyButton");
+
+        function toggleButton() {
+            var button = document.getElementById("toggleButton");
+            var body = document.body;
+            var mainText = document.getElementById("mainText");
+            var hiddenText = document.getElementById("hiddenText");
+
+            button.classList.toggle("active");
+            body.classList.toggle("active");
+            var pressed = button.classList.contains("active");
+            button.setAttribute("aria-pressed", pressed.toString());
+
+            // Adiciona ou remove a classe 'active' para aplicar ou remover o efeito de fade
+            mainText.style.opacity = pressed ? 0 : 1; // Fade-out ou Fade-in
+            hiddenText.style.transition = pressed ? "opacity 0.5s ease-in-out 1s" : "opacity 0.5s ease-in-out";
+            hiddenText.style.visibility = pressed ? "visible" : "hidden";
+            hiddenText.style.opacity = pressed ? 1 : 0; // Altera a opacidade conforme necessário
+
+            // Inicia a música com fade-in
+            if (pressed) {
+                bgMusic.currentTime = 0;
+                bgMusic.play();
+                fadeIn(bgMusic);
+            } else {
+                fadeOut(bgMusic);
+            }
+
+            // Exibe o botão de cópia com delay e fade-in
+            setTimeout(function() {
+                copyButton.classList.toggle("active", pressed);
+            }, 1000); // 1000ms = 1 segundo
+        }
+
+        function fadeIn(element) {
+            var op = 0.1;  // Inicializa a opacidade em 0.1
+            element.style.display = "block";
+            var timer = setInterval(function () {
+                if (op >= 1){
+                    clearInterval(timer);
+                }
+                element.volume = op * 0.5; // Define a altura da música para 50%
+                op += 0.1;
+            }, 50);
+        }
+
+        function fadeOut(element) {
+            var op = 1;  // Inicializa a opacidade em 1
+            var timer = setInterval(function () {
+                if (op <= 0.1){
+                    clearInterval(timer);
+                    element.pause();
+                    element.style.display = "none";
+                }
+                element.volume = op * 0.5; // Define a altura da música para 50%
+                op -= 0.1;
+            }, 50);
+        }
+
+        function copyServerID() {
+            var copyText = document.getElementById("hiddenText");
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            document.body.removeChild(textArea);
+            alert("ID do servidor copiado: " + copyText.textContent);
+        }
+    </script>
+</body>
+</html>
